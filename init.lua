@@ -7,7 +7,6 @@ vim.opt.expandtab = true
 vim.opt.shiftwidth = 2
 vim.opt.number = true
 
-
 -- ===========================================================
 -- PLUGINS
 -- ===========================================================
@@ -17,7 +16,10 @@ vim.pack.add({
   "https://github.com/nvim-tree/nvim-tree.lua",
   "https://github.com/ibhagwan/fzf-lua",
   "https://github.com/nvim-mini/mini.nvim",
-  "https://github.com/lewis6991/gitsigns.nvim"
+  "https://github.com/lewis6991/gitsigns.nvim",
+  "https://github.com/mason-org/mason.nvim",
+  "https://github.com/neovim/nvim-lspconfig",
+  "https://github.com/nvim-treesitter/nvim-treesitter",
 })
 
 
@@ -90,6 +92,7 @@ require("mini.bufremove").setup()
 require("mini.notify").setup()
 require("mini.icons").setup()
 require("mini.statusline").setup()
+require("mini.completion").setup()
 
 -- /////////////////
 -- gitsigns
@@ -107,4 +110,64 @@ require("gitsigns").setup({
   signcolumn = true,
   current_line_blame = true
 })
+
+vim.keymap.set("n", "]h", function()
+  require("gitsigns").next_hunk()
+end, { desc = "Next git hunk" })
+vim.keymap.set("n", "[h", function()
+  require("gitsigns").prev_hunk()
+end, { desc = "Previous git hunk" })
+vim.keymap.set("n", "<leader>hs", function()
+  require("gitsigns").stage_hunk()
+end, { desc = "Stage hunk" })
+vim.keymap.set("n", "<leader>hr", function()
+  require("gitsigns").reset_hunk()
+end, { desc = "Reset hunk" })
+vim.keymap.set("n", "<leader>hp", function()
+  require("gitsigns").preview_hunk()
+end, { desc = "Preview hunk" })
+vim.keymap.set("n", "<leader>hb", function()
+  require("gitsigns").blame_line({ full = true })
+end, { desc = "Blame line" })
+vim.keymap.set("n", "<leader>hB", function()
+  require("gitsigns").toggle_current_line_blame()
+end, { desc = "Toggle inline blame" })
+vim.keymap.set("n", "<leader>hd", function()
+  require("gitsigns").diffthis()
+end, { desc = "Diff this" })
+
+
+-- /////////////////
+-- mason
+-- /////////////////
+
+require("mason").setup()
+
+-- /////////////////
+-- lspconfig
+-- /////////////////
+
+vim.lsp.enable("lua_ls")
+vim.lsp.enable("svelte")
+vim.lsp.enable("html")
+vim.lsp.enable("cssls")
+vim.lsp.enable("ts_ls")
+
+-- This is magic cmd to fix svelte syntax highlighting problem.
+-- Reference: https://github.com/neovim/neovim/discussions/37552
+vim.api.nvim_create_autocmd("BufEnter", {
+	callback = function(args)
+		local ft = vim.bo[args.buf].filetype
+		local lang = vim.treesitter.language.get_lang(ft)
+		if lang ~= nil and vim.treesitter.language.add(lang) then
+			vim.treesitter.start(args.buf, lang)
+		end
+	end,
+})
+
+-- /////////////////
+-- treesitter
+-- /////////////////
+
+require("nvim-treesitter").install { "svelte", "lua", "typescript", "html", "css" }
 
