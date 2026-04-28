@@ -1,11 +1,12 @@
 vim.g.mapleader = " "
+vim.g.autoformat = true
 
 -- Using systemclipboard.
-vim.opt.clipboard = "unnamedplus"
-vim.opt.softtabstop = 2
+vim.opt.clipboard = 'unnamedplus'
 vim.opt.expandtab = true
-vim.opt.shiftwidth = 2
 vim.opt.number = true
+vim.opt.shiftwidth = 1
+vim.opt.softtabstop = 4
 
 -- ===========================================================
 -- PLUGINS
@@ -20,6 +21,8 @@ vim.pack.add({
   "https://github.com/mason-org/mason.nvim",
   "https://github.com/neovim/nvim-lspconfig",
   "https://github.com/nvim-treesitter/nvim-treesitter",
+  'https://github.com/nvim-treesitter/nvim-treesitter',
+  'https://github.com/stevearc/conform.nvim',
 })
 
 
@@ -152,6 +155,7 @@ vim.lsp.enable("svelte")
 vim.lsp.enable("html")
 vim.lsp.enable("cssls")
 vim.lsp.enable("ts_ls")
+vim.lsp.enable('rust_analyzer')
 
 -- This is magic cmd to fix svelte syntax highlighting problem.
 -- Reference: https://github.com/neovim/neovim/discussions/37552
@@ -169,5 +173,22 @@ vim.api.nvim_create_autocmd("BufEnter", {
 -- treesitter
 -- /////////////////
 
-require("nvim-treesitter").install { "svelte", "lua", "typescript", "html", "css" }
+require('nvim-treesitter').install({ 'svelte', 'lua', 'typescript', 'html', 'css', 'rust' })
+
+-- /////////////////
+-- conform
+-- /////////////////
+
+require('conform').setup({
+    formatters_by_ft = {
+        lua = { 'stylua' },
+        typescript = { 'prettierd' },
+        svelte = { 'prettierd' },
+        rust = { lsp = 'fallback' },
+    },
+    format_on_save = {
+        timeout_ms = 1000,
+        lsp_format = 'fallback',
+    },
+})
 
