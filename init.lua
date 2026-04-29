@@ -5,7 +5,7 @@ vim.g.autoformat = true
 vim.opt.clipboard = 'unnamedplus'
 vim.opt.expandtab = true
 vim.opt.number = true
-vim.opt.shiftwidth = 1
+vim.opt.shiftwidth = 2
 vim.opt.softtabstop = 4
 
 -- ===========================================================
@@ -160,13 +160,13 @@ vim.lsp.enable('rust_analyzer')
 -- This is magic cmd to fix svelte syntax highlighting problem.
 -- Reference: https://github.com/neovim/neovim/discussions/37552
 vim.api.nvim_create_autocmd("BufEnter", {
-	callback = function(args)
-		local ft = vim.bo[args.buf].filetype
-		local lang = vim.treesitter.language.get_lang(ft)
-		if lang ~= nil and vim.treesitter.language.add(lang) then
-			vim.treesitter.start(args.buf, lang)
-		end
-	end,
+  callback = function(args)
+    local ft = vim.bo[args.buf].filetype
+    local lang = vim.treesitter.language.get_lang(ft)
+    if lang ~= nil and vim.treesitter.language.add(lang) then
+      vim.treesitter.start(args.buf, lang)
+    end
+  end,
 })
 
 -- /////////////////
@@ -180,15 +180,14 @@ require('nvim-treesitter').install({ 'svelte', 'lua', 'typescript', 'html', 'css
 -- /////////////////
 
 require('conform').setup({
-    formatters_by_ft = {
-        lua = { 'stylua' },
-        typescript = { 'prettierd' },
-        svelte = { 'prettierd' },
-        rust = { lsp = 'fallback' },
-    },
-    format_on_save = {
-        timeout_ms = 1000,
-        lsp_format = 'fallback',
-    },
+  formatters_by_ft = {
+    lua = { 'stylua' },
+    typescript = { 'prettierd' },
+    svelte = { 'prettierd' },
+    rust = { lsp = 'fallback' },
+  },
+  format_on_save = {
+    timeout_ms = 2000,
+    lsp_format = 'fallback',
+  },
 })
-

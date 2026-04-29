@@ -1,5 +1,9 @@
 {
   "plugins": {
+    "conform.nvim": {
+      "rev": "dca1a190aa85f9065979ef35802fb77131911106",
+      "src": "https://github.com/stevearc/conform.nvim"
+    },
     "fzf-lua": {
       "rev": "1ae863c83e0823225b4e041845f10c918d5fb882",
       "src": "https://github.com/ibhagwan/fzf-lua"
