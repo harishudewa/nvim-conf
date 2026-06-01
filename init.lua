@@ -154,10 +154,10 @@ require('mason').setup()
 -- /////////////////
 
 vim.lsp.config['tailwindcss'] = {
-    filetypes = { 'html', 'css', 'javascript', 'typescript', 'react', 'vue', 'svelte', 'elm', 'gleam' },
+    filetypes = { 'html', 'css', 'javascript', 'typescript', 'react', 'vue', 'svelte', 'elm', 'gleam', 'rust' },
     settings = {
         tailwindCSS = {
-            includeLanguages = { gleam = 'html' },
+            includeLanguages = { gleam = 'html', rust = 'html' },
             experimental = {
                 classRegex = { '"([^"]*)"' },
             },
