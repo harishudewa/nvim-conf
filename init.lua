@@ -6,6 +6,7 @@ vim.opt.clipboard = 'unnamedplus'
 vim.opt.expandtab = true
 vim.opt.number = true
 vim.opt.shiftwidth = 1
+vim.opt.colorcolumn = '100'
 
 -- ===========================================================
 -- PLUGINS
@@ -161,6 +162,14 @@ vim.lsp.config['tailwindcss'] = {
             experimental = {
                 classRegex = { '"([^"]*)"' },
             },
+        },
+    },
+}
+
+vim.lsp.config['rust_analyzer'] = {
+    settings = {
+        ['rust-analyzer'] = {
+            cargo = { allFeatures = true },
         },
     },
 }
