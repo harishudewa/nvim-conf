@@ -99,7 +99,57 @@ require('mini.trailspace').setup()
 require('mini.bufremove').setup()
 require('mini.notify').setup()
 require('mini.icons').setup()
-require('mini.statusline').setup()
+local function workspace_diagnostics()
+    local diagnostics = vim.diagnostic.get(nil)
+    local counts = { ERROR = 0, WARN = 0, INFO = 0, HINT = 0 }
+    for _, d in ipairs(diagnostics) do
+        local sev = vim.diagnostic.severity[d.severity]
+        counts[sev] = (counts[sev] or 0) + 1
+    end
+
+    local parts = {}
+    if counts.ERROR > 0 then
+        table.insert(parts, 'E' .. counts.ERROR)
+    end
+    if counts.WARN > 0 then
+        table.insert(parts, 'W' .. counts.WARN)
+    end
+    if counts.INFO > 0 then
+        table.insert(parts, 'I' .. counts.INFO)
+    end
+    if counts.HINT > 0 then
+        table.insert(parts, 'H' .. counts.HINT)
+    end
+
+    if #parts == 0 then
+        return ''
+    end
+    return table.concat(parts, ' ')
+end
+
+require('mini.statusline').setup({
+    content = {
+        active = function()
+            local mode, mode_hl = MiniStatusline.section_mode({ trunc_width = 120 })
+            local git = MiniStatusline.section_git({ trunc_width = 75 })
+            local diff = MiniStatusline.section_diff({ trunc_width = 75 })
+            local diagnostics = workspace_diagnostics() -- custom, workspace-wide
+            local filename = MiniStatusline.section_filename({ trunc_width = 140 })
+            local fileinfo = MiniStatusline.section_fileinfo({ trunc_width = 120 })
+            local location = MiniStatusline.section_location({ trunc_width = 75 })
+
+            return MiniStatusline.combine_groups({
+                { hl = mode_hl, strings = { mode } },
+                { hl = 'MiniStatuslineDevinfo', strings = { git, diff, diagnostics } },
+                '%<',
+                { hl = 'MiniStatuslineFilename', strings = { filename } },
+                '%=',
+                { hl = 'MiniStatuslineFileinfo', strings = { fileinfo } },
+                { hl = mode_hl, strings = { location } },
+            })
+        end,
+    },
+})
 -- require('mini.completion').setup()
 
 -- /////////////////
@@ -244,3 +294,10 @@ cmp.setup({
     },
     signature = { enabled = true },
 })
+
+-- /////////////////
+-- keymaps
+-- /////////////////
+
+vim.keymap.set('n', '<leader>d', vim.diagnostic.open_float, { desc = 'Show diagnostic' })
+vim.keymap.set('n', '<leader>ca', vim.lsp.buf.code_action, { desc = 'Code Action' })
