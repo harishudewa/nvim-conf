@@ -65,6 +65,12 @@ end, { desc = 'Toggle nvim-tree' })
 
 require('fzf-lua').setup()
 
+vim.keymap.set('n', '<leader>fa', function()
+    require('fzf-lua').files({
+        cmd = 'fd --type f --hidden --no-ignore',
+        prompt = 'All files> ',
+    })
+end, { desc = 'FZF all files including hidden and git ignored' })
 vim.keymap.set('n', '<leader>ff', function()
     require('fzf-lua').files()
 end, { desc = 'FZF Files' })
