@@ -1,13 +1,13 @@
-local bufnr = vim.api.nvim_buf_get_lines(0, 0, -1, true)
-
-for index, value in ipairs(bufnr) do
-    local key = ''
-    for k, _ in string.gmatch(value, '([^=]+)=(.+)') do
-        key = k
-        break
-    end
-
-    if key ~= '' then
-        vim.api.nvim_buf_set_lines(0, index - 1, index, true, { string.format('%s=***', key) })
-    end
-end
+-- local bufnr = vim.api.nvim_buf_get_lines(0, 0, -1, true)
+--
+-- for index, value in ipairs(bufnr) do
+--     local key = ''
+--     for k, _ in string.gmatch(value, '([^=]+)=(.+)') do
+--         key = k
+--         break
+--     end
+--
+--     if key ~= '' then
+--         vim.api.nvim_buf_set_lines(0, index - 1, index, true, { string.format('%s=***', key) })
+--     end
+-- end
