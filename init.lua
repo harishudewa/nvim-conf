@@ -239,6 +239,7 @@ vim.lsp.enable('rust_analyzer')
 vim.lsp.enable('zls')
 vim.lsp.enable('gleam')
 vim.lsp.enable('tailwindcss')
+vim.lsp.enable('gopls')
 
 -- This is magic cmd to fix svelte syntax highlighting problem.
 -- Reference: https://github.com/neovim/neovim/discussions/37552
