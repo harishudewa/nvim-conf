@@ -5,8 +5,9 @@ vim.g.autoformat = true
 vim.opt.clipboard = 'unnamedplus'
 vim.opt.expandtab = true
 vim.opt.number = true
-vim.opt.shiftwidth = 1
+vim.opt.shiftwidth = 4
 vim.opt.colorcolumn = '100'
+vim.opt.tabstop = 4
 
 -- ===========================================================
 -- PLUGINS
@@ -259,7 +260,7 @@ vim.keymap.set('n', 'gd', vim.lsp.buf.definition, { desc = 'Go to definition' })
 -- treesitter
 -- /////////////////
 
-require('nvim-treesitter').install({ 'svelte', 'lua', 'typescript', 'html', 'css', 'rust', 'zig', 'gleam' })
+require('nvim-treesitter').install({ 'svelte', 'lua', 'typescript', 'html', 'css', 'rust', 'zig', 'gleam', 'go' })
 
 -- /////////////////
 -- conform
@@ -270,6 +271,7 @@ require('conform').setup({
         lua = { 'stylua' },
         typescript = { 'prettierd' },
         svelte = { 'prettierd' },
+        go = { lsp = 'fallback' },
         rust = { lsp = 'fallback' },
         zig = { lsp = 'fallback' },
         gleam = { lsp = 'fallback' },
