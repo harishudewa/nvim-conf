@@ -270,6 +270,7 @@ require('conform').setup({
     formatters_by_ft = {
         lua = { 'stylua' },
         typescript = { 'prettierd' },
+        typescriptreact = { 'prettierd' },
         svelte = { 'prettierd' },
         go = { lsp = 'fallback' },
         rust = { lsp = 'fallback' },
