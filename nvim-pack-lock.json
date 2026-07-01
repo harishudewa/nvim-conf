@@ -28,6 +28,10 @@
       "rev": "be81509b7160aa02264a59789164a2e1c4a6750a",
       "src": "https://github.com/nvim-mini/mini.nvim"
     },
+    "nightfox.nvim": {
+      "rev": "26b61b1f856ec37cae3cb64f5690adb955f246a1",
+      "src": "https://github.com/EdenEast/nightfox.nvim"
+    },
     "nvim-lspconfig": {
       "rev": "eeef061d58d759b5419c1e20c4b3a5bc3154f871",
       "src": "https://github.com/neovim/nvim-lspconfig"
@@ -43,6 +47,10 @@
     "vague.nvim": {
       "rev": "fd58046b9d64259d9785e4aeb6d6f494c6943cad",
       "src": "https://github.com/vague-theme/vague.nvim"
+    },
+    "zenbones.nvim": {
+      "rev": "239bdb9a09c8d38c752c43590d02f654ed0da2b0",
+      "src": "https://github.com/zenbones-theme/zenbones.nvim"
     }
   }
 }

@@ -6,8 +6,9 @@ vim.opt.clipboard = 'unnamedplus'
 vim.opt.expandtab = true
 vim.opt.number = true
 vim.opt.shiftwidth = 4
-vim.opt.colorcolumn = '100'
+-- vim.opt.colorcolumn = '100'
 vim.opt.tabstop = 4
+vim.opt.scrolloff = 10
 
 -- ===========================================================
 -- PLUGINS
@@ -15,6 +16,7 @@ vim.opt.tabstop = 4
 
 vim.pack.add({
     'https://github.com/vague-theme/vague.nvim',
+    'https://github.com/EdenEast/nightfox.nvim',
     'https://github.com/nvim-tree/nvim-tree.lua',
     'https://github.com/ibhagwan/fzf-lua',
     'https://github.com/nvim-mini/mini.nvim',
@@ -35,11 +37,17 @@ vim.pack.add({
 -- vague color scheme
 -- /////////////////
 
-require('vague').setup({
-    transparent = true,
-})
+-- require('vague').setup({
+--     transparent = true,
+-- })
+-- vim.cmd.colorscheme('vague')
 
-vim.cmd.colorscheme('vague')
+require('nightfox').setup({
+    options = {
+        transparent = true,
+    },
+})
+vim.cmd.colorscheme('dayfox')
 
 -- /////////////////
 -- nvim-tree
@@ -90,6 +98,18 @@ end, { desc = 'FZF Diagnostics Document' })
 vim.keymap.set('n', '<leader>fX', function()
     require('fzf-lua').diagnostics_workspace()
 end, { desc = 'FZF Diagnostics Workspace' })
+vim.keymap.set('n', 'grr', function()
+    require('fzf-lua').lsp_references({ jump1 = true })
+end, { desc = 'FZF LSP References' })
+vim.keymap.set('n', 'gri', function()
+    require('fzf-lua').lsp_implementations({ jump1 = true })
+end, { desc = 'FZF LSP Implementations' })
+vim.keymap.set('n', 'gO', function()
+    require('fzf-lua').lsp_document_symbols()
+end, { desc = 'FZF LSP Document Symbols' })
+vim.keymap.set('n', '<leader>fS', function()
+    require('fzf-lua').lsp_live_workspace_symbols()
+end, { desc = 'FZF LSP Workspace Symbols' })
 
 -- /////////////////
 -- nvim mini
